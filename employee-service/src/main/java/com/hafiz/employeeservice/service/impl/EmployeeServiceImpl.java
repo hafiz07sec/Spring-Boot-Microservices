@@ -3,6 +3,7 @@ package com.hafiz.employeeservice.service.impl;
 import com.hafiz.employeeservice.dto.APIResponseDto;
 import com.hafiz.employeeservice.dto.DepartmentDto;
 import com.hafiz.employeeservice.dto.EmployeeDto;
+import com.hafiz.employeeservice.dto.OrganizationDto;
 import com.hafiz.employeeservice.entity.Employee;
 import com.hafiz.employeeservice.exception.EmailAlreadyExistException;
 import com.hafiz.employeeservice.exception.ResourceNotFoundException;
@@ -76,11 +77,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         //spring-cloud-openFeign library to REST API CALL btn microservices
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organizations/"+employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
         EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
+
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
-
+        apiResponseDto.setOrganization(organizationDto);
         return apiResponseDto;
     }
 

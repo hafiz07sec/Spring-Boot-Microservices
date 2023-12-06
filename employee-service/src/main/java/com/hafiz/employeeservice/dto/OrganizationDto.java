@@ -1,21 +1,21 @@
 package com.hafiz.employeeservice.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+import java.time.LocalDateTime;
+
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class EmployeeDto {
+@AllArgsConstructor
+public class OrganizationDto {
 
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String departmentCode;
+    private String organizationName;
+    private String organizationDescription;
     private String organizationCode;
+    private LocalDateTime createDate;
 }
